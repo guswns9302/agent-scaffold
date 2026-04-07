@@ -3,6 +3,13 @@
 ## Core Rules
 
 - 사용자가 명시적으로 `docs/feature/<feature-slug>/task.md` 파일을 작업 입력으로 준 경우에는 `Workflow Rules` 섹션을 적용한다.
+- 사용자가 prd를 만들거나 아이디어를 구체화시킬때에는 `Brainstorming Rules` 섹션을 적용한다.
+
+## Brainstorming Rules
+- 아이디어를 구체화시킬때에는 `brainstorming` 스킬을 사용한다.
+- 구체화된 산출물은 `docs/prd/`경로에서 관리하며, 최종 산출물은 `docs/prd/prd.md`로 사용한다.
+- 이 단계에서 절대 구현을 하지 않는다.
+  - 프로젝트 레이어와 코드베이스 등의 생성/수정은 일체 하지 않는다.
 
 ## Workflow Rules
 - 작업 시작 전 반드시 `docs/workflow/agent_orchestration.md`와 `docs/workflow/agent_list.md`를 읽고 해당 피처의 오케스트레이션 규칙을 적용한다.
