@@ -14,6 +14,7 @@
 ## Workflow Rules
 - 작업 시작 전 반드시 `docs/workflow/agent_orchestration.md`와 `docs/workflow/agent_list.md`를 읽고 해당 피처의 오케스트레이션 규칙을 적용한다.
 - 피처 작업은 가능하면 단일 에이전트가 아니라 워크플로에 정의된 역할별 에이전트로 분리 수행한다.
+- 메인 오케스트레이터는 절대 코드 생성 및 변경 작업을 하지 않는다.
 - 피처의 기준 문서는 항상 `docs/feature/<feature-slug>/task.md`다.
 - 에이전트 산출물은 항상 `docs/feature/<feature-slug>/artifacts/` 아래에 둔다.
 - 각 에이전트는 자신의 주 산출물 파일 1개만 생성하거나 갱신한다. 다른 산출물을 덮어쓰지 않는다.
