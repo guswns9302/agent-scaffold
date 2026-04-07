@@ -26,16 +26,18 @@ mkdir my-new-project
 
 ### 3. 새 프로젝트 폴더로 보일러플레이트 복사
 
+`README.md`를 제외하고 복사하는 예시입니다.
+
 현재 디렉터리에서 `agent-scaffold`와 `my-new-project`가 같은 상위 경로에 있다는 기준 예시입니다.
 
 ```bash
-cp -R agent-scaffold/. my-new-project/
+rsync -av --exclude='README.md' agent-scaffold/ my-new-project/
 ```
 
 이미 `agent-scaffold` 폴더 안으로 들어온 상태라면 아래처럼 실행할 수 있습니다.
 
 ```bash
-cp -R . /path/to/my-new-project/
+rsync -av --exclude='README.md' ./ /path/to/my-new-project/
 ```
 
 ### 4. 새 프로젝트에서 문서 초기화
