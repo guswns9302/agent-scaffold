@@ -164,6 +164,10 @@ Do not use ad hoc orchestration outside this contract unless the repository clea
 
 - Role-specific agents must NOT modify `status.md`.
 
+- The orchestrator must create `status.md` before the first phase starts.
+
+- `status.md` creation must not wait for `ui-designer`, `backend-developer`, or any other downstream artifact to exist.
+
 - The orchestrator must:
   - use `docs/status-template/status.md` as the template
   - read each artifact’s frontmatter (`status`, `updated_at`, `blocked_by`)
@@ -172,6 +176,8 @@ Do not use ad hoc orchestration outside this contract unless the repository clea
 
 - Status must use the standardized enum:
   `not_started`, `in_progress`, `blocked`, `completed`, `needs_revision`, `skipped`
+
+- If an artifact does not exist yet for a valid future phase, record it as `not_started`.
 
 - When `blocked_by` is not applicable, record `-`.
 
