@@ -14,6 +14,7 @@ This document lists the custom agents used during orchestration. The base direct
 - All agent artifacts must be stored under `docs/feature/<feature-slug>/artifacts/`.
 - Each agent may create or update only its own primary artifact, and must not overwrite artifacts owned by other agents.
 - Exception: downstream agents may update only the `작업 체크리스트` status and short progress notes inside `artifacts/business-analysis.md`.
+- All artifacts should include standard frontmatter metadata including `feature`, `artifact`, `owner`, `created_by`, `status`, `updated_at`, and `upstream`.
 - Each artifact should include at least these sections so the next agent can use it directly as input: `Purpose`, `Input`, `Key Decisions or Implementation`, `Risks and Open Issues`, `Notes for the Next Agent`.
 - Create an artifact file only when that role is needed. For example, if the feature has no mobile work, do not create `mobile-implementation.md`.
 
@@ -78,17 +79,7 @@ Use this agent before implementation when screen structure or interaction decisi
 - Input: `task.md`, `artifacts/business-analysis.md`, and optionally `artifacts/api-contract.md`
 - Output: `docs/feature/<feature-slug>/artifacts/ui-spec.md`
 
-## 07. qa-expert
-
-Use this agent when defining test scope, release risk, and verification strategy.
-
-- Identifies critical failure scenarios.
-- Proposes high-priority verification items.
-- Summarizes release gates and residual risk.
-- Input: `task.md`, `artifacts/business-analysis.md`, and optionally all design and implementation artifacts
-- Output: `docs/feature/<feature-slug>/artifacts/qa-plan.md`
-
-## 08. code-reviewer
+## 07. code-reviewer
 
 Use this agent when reviewing implementation quality, maintainability, and regression risk.
 
@@ -97,3 +88,13 @@ Use this agent when reviewing implementation quality, maintainability, and regre
 - Checks for missing tests and hidden coupling.
 - Input: `task.md`, and optionally all `artifacts/*.md`
 - Output: `docs/feature/<feature-slug>/artifacts/code-review.md`
+
+## 08. qa-expert
+
+Use this agent when defining test scope, release risk, and verification strategy.
+
+- Identifies critical failure scenarios.
+- Proposes high-priority verification items.
+- Summarizes release gates and residual risk.
+- Input: `task.md`, `artifacts/business-analysis.md`, and optionally all design and implementation artifacts
+- Output: `docs/feature/<feature-slug>/artifacts/qa-plan.md`

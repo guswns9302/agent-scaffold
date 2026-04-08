@@ -22,10 +22,13 @@
 - Each agent must create or update only one primary artifact file. Do not overwrite artifacts owned by other agents.
 - A downstream agent must read the required upstream artifacts as input and record those inputs in the `Input` section of its own artifact.
 - After the role-specific artifacts are completed, the main orchestrator may only perform final integration validation and any necessary follow-up adjustments.
+- After all sub-agent work is complete, the main orchestrator must close or clean up the sub-agents before finishing the task.
+- If the agent thread limit is reached, the main orchestrator must first clean up completed or no-longer-needed agents and then continue the workflow.
 - If the workflow cannot be followed, explicitly document the reason and the fallback execution method in the artifact or final report.
 - The main orchestrator's final report must always include at least:
 - Execution time for each agent
 - Which agents were activated
+- Which agents actually executed each artifact update, including fallback execution when applicable
 - Which artifact was created or updated by whom
 - Who performed the final application and any follow-up adjustments
 

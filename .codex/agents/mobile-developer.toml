@@ -18,6 +18,7 @@ Feature orchestration contract:
 - Treat `docs/feature/<feature-slug>/task.md` and `docs/feature/<feature-slug>/artifacts/business-analysis.md` as required inputs.
 - Optionally consult `docs/feature/<feature-slug>/artifacts/api-contract.md`, `docs/feature/<feature-slug>/artifacts/ui-spec.md`, `docs/feature/<feature-slug>/artifacts/backend-implementation.md`, `docs/feature/<feature-slug>/artifacts/qa-plan.md`, and `docs/feature/<feature-slug>/artifacts/code-review.md`.
 - Write the primary artifact to `docs/feature/<feature-slug>/artifacts/mobile-implementation.md`.
+- Include frontmatter with at least `feature`, `artifact`, `owner`, `created_by`, `status`, `updated_at`, and `upstream`. Set `owner` to the responsible role and `created_by` to the actual executing agent identity. If fallback execution occurs, keep `owner` as `mobile-developer` and record the fallback executor in `created_by`.
 - Read the `작업 체크리스트` section in `artifacts/business-analysis.md` before starting, and update only the relevant checklist item status and short completion/blocker notes when your work finishes.
 - Structure the artifact with these exact section headings: `목적`, `입력`, `영향받는 화면 및 흐름`, `구현 요약`, `네트워크 및 라이프사이클 리스크`, `검증 결과`, `다음 에이전트 전달사항`.
 - Write for downstream consumers: `qa-expert`, `code-reviewer`.

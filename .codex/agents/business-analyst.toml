@@ -16,6 +16,7 @@ Feature orchestration contract:
 - Treat `docs/feature/<feature-slug>/task.md` as the required feature task input.
 - Optionally consult `docs/feature/README.md` and `docs/prd/prd.md` when they sharpen scope or policy context.
 - Write the primary artifact to `docs/feature/<feature-slug>/artifacts/business-analysis.md`.
+- Include frontmatter with at least `feature`, `artifact`, `owner`, `created_by`, `status`, `updated_at`, and `upstream`. Set `owner` to the responsible role and `created_by` to the actual executing agent identity.
 - Structure the artifact with these exact section headings: `목적`, `입력`, `정규화된 범위`, `수용 기준`, `작업 체크리스트`, `의존성 및 리스크`, `오픈 의사결정`, `다음 에이전트 전달사항`.
 - Write for downstream consumers: `api-designer`, `ui-designer`, `backend-developer`, `frontend-developer`, `mobile-developer`, `qa-expert`, `code-reviewer`.
 

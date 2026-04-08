@@ -48,6 +48,7 @@ All artifacts should follow this shared metadata and section structure:
 feature: <feature-slug>
 artifact: <artifact-name>
 owner: <agent-name>
+created_by: <actual-agent-identity>
 status: draft
 updated_at: YYYY-MM-DD
 upstream:
@@ -73,13 +74,17 @@ upstream:
 
 Rules:
 
+- `owner` is the intended workflow role responsible for the artifact.
+- `created_by` is the actual agent identity that created or last materially updated the artifact in the current run.
+- In a normal execution, `owner` and `created_by` may be the same. In a fallback execution, keep `owner` as the target role and record the actual writer in `created_by`, for example `orchestrator (fallback for ui-designer)`.
 - In `Input`, record both the actual file paths you read and a short summary of what mattered.
 - In `artifacts/business-analysis.md`, `작업 체크리스트` is the canonical shared progress tracker for the feature.
 - `business-analyst` creates the initial checklist from `task.md` and normalized scope.
-- Downstream agents may update only checklist status and short completion/blocker notes there. They must not silently rewrite the analysis content.
+- Downstream agents may update only checklist status and short completion/blocker notes there. They must not silently rewrite the analysis content, `owner`, or `created_by`.
 - In `Notes for the Next Agent`, record immediately actionable conditions, cautions, and blockers.
 - Implementation agents must record changed files, verification commands, and environment constraints.
 - Design agents must record unresolved decisions and available options.
+- When an agent creates or materially updates its primary artifact, it must set or refresh `created_by` and `updated_at`.
 
 ## Agent Contracts
 
@@ -91,8 +96,8 @@ Rules:
 | `backend-developer` | `task.md`, `artifacts/business-analysis.md` | `artifacts/api-contract.md`, `artifacts/qa-plan.md` | `artifacts/backend-implementation.md` | `frontend-developer`, `mobile-developer`, `qa-expert`, `code-reviewer` |
 | `frontend-developer` | `task.md`, `artifacts/business-analysis.md` | `artifacts/api-contract.md`, `artifacts/ui-spec.md`, `artifacts/backend-implementation.md` | `artifacts/frontend-implementation.md` | `backend-developer`, `mobile-developer`, `qa-expert`, `code-reviewer` |
 | `mobile-developer` | `task.md`, `artifacts/business-analysis.md` | `artifacts/api-contract.md`, `artifacts/ui-spec.md`, `artifacts/backend-implementation.md` | `artifacts/mobile-implementation.md` | `backend-developer`, `frontend-developer`, `qa-expert`, `code-reviewer` |
-| `qa-expert` | `task.md`, `artifacts/business-analysis.md` | all design and implementation artifacts | `artifacts/qa-plan.md` | implementation agents |
 | `code-reviewer` | `task.md` | `artifacts/backend-implementation.md`, `artifacts/frontend-implementation.md`, `artifacts/mobile-implementation.md` | `artifacts/code-review.md` | implementation agents |
+| `qa-expert` | `task.md`, `artifacts/business-analysis.md` | all design and implementation artifacts | `artifacts/qa-plan.md` | implementation agents |
 
 ## Recommended Execution Order
 
@@ -132,7 +137,9 @@ Parallel conditions:
 2. If no further changes are required, explicitly add `(Complete)` to the top-level header of `code-review.md`.
 3. Implementation agents must read `code-review.md` again and apply required fixes or document residual risk.
 4. If `(Complete)` is not present in the top-level header of `code-review.md`, the orchestrator must not move to `5. QA Verification` and must continue the feedback loop in `4. Code Review`.
-5. The feedback loop in `4. Code Review` is limited to a maximum of 5 cycles per feature.
+5. The feedback loop in `4. Code Review` is limited to a maximum of 3 cycles per feature.
+6. If a code review cycle does not materially change the failing outcome, do not continue automatically. Escalate first to requirement redefinition, design revision, scope reduction, residual risk acceptance, or environment/test limitation acceptance.
+7. If `code-reviewer` identifies a blocker that cannot be resolved within the current scope without a requirement or architectural change, escalate immediately instead of consuming the remaining loop budget.
 
 ### 5. QA Verification
 
@@ -142,6 +149,8 @@ Parallel conditions:
 4. Implementation agents must read `qa-plan.md` again and apply required fixes or document residual risk for failed verification items.
 5. If not all items in `qa-plan.md` are successful, the orchestrator must continue the QA feedback loop.
 6. Once `(Complete)` has been added to `code-review.md` and the workflow has entered QA verification, later QA feedback must not send the workflow back to `4. Code Review`.
+7. If a QA cycle does not materially change the failing outcome, do not continue automatically. Escalate first to requirement redefinition, design revision, scope reduction, residual risk acceptance, or environment/test limitation acceptance.
+8. If `qa-expert` identifies a blocker that cannot be resolved within the current scope without a requirement or architectural change, escalate immediately instead of consuming the remaining loop budget.
 
 ## Orchestration Rules
 
@@ -158,14 +167,16 @@ Parallel conditions:
 
 ## Feedback Loop Limits
 
-- The feedback loop in `4. Code Review` is limited to 5 cycles per feature.
-- The feedback loop in `5. QA Verification` is limited to 5 cycles per feature.
+- The feedback loop in `4. Code Review` is limited to 3 cycles per feature.
+- The feedback loop in `5. QA Verification` is limited to 3 cycles per feature.
 - If `(Complete)` is not present in the top-level header of `code-review.md`, the cycle remains inside the code review loop only. It must not enter QA and must not count toward QA cycles.
 - Once `(Complete)` appears in `code-review.md` and the QA loop has started, later failures must not send the workflow back to the code review loop.
 - One code review loop cycle means: implementation agents read the `code-reviewer` result, update actual code or their implementation artifact, and then submit the feature for code review again.
 - One QA loop cycle means: after `(Complete)` appears in the top-level header of `code-review.md`, implementation agents read the `qa-expert` result, update actual code or their implementation artifact, and then submit the feature for QA verification again.
-- If a loop does not converge within 5 cycles, stop repeating that loop. The orchestrator or a human must first decide one of the following: redefine requirements, revise design, reduce scope, or accept residual risk.
-- If the same issue is repeated for 3 consecutive cycles, stop the loop even if cycles remain. Record why it was not resolved and what decision is required in the artifact's `Risks and Open Issues` section.
+- If a loop does not converge within 3 cycles, stop repeating that loop. The orchestrator or a human must first decide one of the following: redefine requirements, revise design, reduce scope, accept residual risk, or accept an environment/test limitation.
+- If the same issue is repeated for 2 consecutive cycles, stop the loop even if cycles remain. Record why it was not resolved, classify the blocker as requirement, design, implementation, environment/test limitation, or risk acceptance, and state what decision is required in the artifact's `Risks and Open Issues` section.
+- If a loop cycle does not materially change the failing outcome, do not continue the same loop automatically. Escalate before spending another cycle.
+- If `code-reviewer` or `qa-expert` identifies a blocker that cannot be resolved within the current scope without a requirement or architectural change, escalate immediately instead of consuming the remaining loop budget.
 - Track feedback counts in the `Verification or Evidence` section of `artifacts/code-review.md` and `artifacts/qa-plan.md` using the format `feedback_cycle: N`.
 
 ## Minimum Flows By Feature Type
