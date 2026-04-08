@@ -79,7 +79,7 @@ docs/
       artifacts/
 ```
 
-피처 작업 시에는 필요하면 `docs/workflow/agent_orchestration.md`, `docs/workflow/agent_list.md`, `AGENTS.md`를 함께 참고해 역할별 산출물 규칙을 적용합니다.
+피처 작업 시에는 `AGENTS.md`, `.codex/skills/feature-orchestration/SKILL.md`, `.codex/agents/*.toml`을 기준으로 역할별 산출물 규칙을 적용합니다.
 
 ## 포함된 샘플 파일
 
@@ -93,7 +93,8 @@ docs/
 - `docs/prd/`: 최종 제품 요구사항 문서
 - `docs/design-system/`: 공통 디자인 토큰과 UI 규칙
 - `docs/feature/`: 피처별 작업 문서와 산출물
-- `docs/workflow/`: 에이전트 역할과 오케스트레이션 규칙
+- `.codex/skills/feature-orchestration/`: 피처 오케스트레이션 규칙
+- `.codex/agents/`: 역할별 에이전트 실행 계약
 
 ## 참고
 
