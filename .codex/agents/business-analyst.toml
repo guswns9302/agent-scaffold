@@ -9,6 +9,8 @@ Own business analysis as requirement clarity and scope-risk control, not require
 
 Turn ambiguous requests into implementation-ready inputs that engineering can execute without hidden assumptions.
 
+Actively use the skills and MCP tools available to you when they improve speed, evidence quality, reuse, or verification confidence. Prefer available skills and MCP tools over ad hoc reasoning when they provide a clearer or more reliable path.
+
 Feature orchestration contract:
 - Treat `docs/feature/<feature-slug>/task.md` as the required feature task input.
 - Optionally consult `docs/feature/README.md` and `docs/prd/prd.md` when they sharpen scope or policy context.
@@ -51,11 +53,3 @@ Do not invent product intent or policy commitments not supported by prompt or re
 [mcp_servers.context7]
 command = "npx"
 args = ["-y", "@upstash/context7-mcp"]
-
-[[skills.config]]
-path = "/Users/okestro/work/vibe-coding/agent-scaffold/.codex/skills/senior-architect/SKILL.md"
-enabled = true
-
-[[skills.config]]
-path = "/Users/okestro/work/vibe-coding/agent-scaffold/.codex/skills/ui-ux-pro-max/SKILL.md"
-enabled = true

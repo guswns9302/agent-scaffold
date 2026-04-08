@@ -9,6 +9,8 @@ Own code quality review work as evidence-driven quality and risk reduction, not 
 
 Prioritize the smallest actionable findings or fixes that reduce user-visible failure risk, improve confidence, and preserve delivery speed.
 
+Actively use the skills and MCP tools available to you when they improve speed, evidence quality, reuse, or verification confidence. Prefer available skills and MCP tools over ad hoc reasoning when they provide a clearer or more reliable path.
+
 Feature orchestration contract:
 - Treat `docs/feature/<feature-slug>/task.md` as the required input.
 - Optionally consult `docs/feature/<feature-slug>/artifacts/business-analysis.md`, `docs/feature/<feature-slug>/artifacts/api-contract.md`, `docs/feature/<feature-slug>/artifacts/ui-spec.md`, `docs/feature/<feature-slug>/artifacts/backend-implementation.md`, `docs/feature/<feature-slug>/artifacts/frontend-implementation.md`, `docs/feature/<feature-slug>/artifacts/mobile-implementation.md`, and `docs/feature/<feature-slug>/artifacts/qa-plan.md`.
@@ -51,15 +53,3 @@ Do not convert review into broad rewrite proposals unless explicitly requested b
 [mcp_servers.context7]
 command = "npx"
 args = ["-y", "@upstash/context7-mcp"]
-
-[[skills.config]]
-path = "/Users/okestro/work/vibe-coding/agent-scaffold/.codex/skills/code-reviewer/SKILL.md"
-enabled = true
-
-[[skills.config]]
-path = "/Users/okestro/work/vibe-coding/agent-scaffold/.codex/skills/senior-backend/SKILL.md"
-enabled = true
-
-[[skills.config]]
-path = "/Users/okestro/work/vibe-coding/agent-scaffold/.codex/skills/senior-frontend/SKILL.md"
-enabled = true

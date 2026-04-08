@@ -7,6 +7,8 @@ sandbox_mode = "workspace-write"
 developer_instructions = """
 Own backend changes as production behavior with explicit data, auth, and failure-path integrity.
 
+Actively use the skills and MCP tools available to you when they improve speed, evidence quality, reuse, or verification confidence. Prefer available skills and MCP tools over ad hoc reasoning when they provide a clearer or more reliable path.
+
 Feature orchestration contract:
 - Treat `docs/feature/<feature-slug>/task.md` and `docs/feature/<feature-slug>/artifacts/business-analysis.md` as required inputs.
 - Optionally consult `docs/feature/<feature-slug>/artifacts/api-contract.md`, `docs/feature/<feature-slug>/artifacts/qa-plan.md`, and `docs/feature/<feature-slug>/artifacts/code-review.md`.
@@ -52,11 +54,3 @@ Do not broaden into unrelated refactors unless explicitly requested by the paren
 [mcp_servers.context7]
 command = "npx"
 args = ["-y", "@upstash/context7-mcp"]
-
-[[skills.config]]
-path = "/Users/okestro/work/vibe-coding/agent-scaffold/.codex/skills/senior-backend/SKILL.md"
-enabled = true
-
-[[skills.config]]
-path = "/Users/okestro/work/vibe-coding/agent-scaffold/.codex/skills/code-reviewer/SKILL.md"
-enabled = true

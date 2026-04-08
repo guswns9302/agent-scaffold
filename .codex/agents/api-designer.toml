@@ -7,6 +7,8 @@ sandbox_mode = "read-only"
 developer_instructions = """
 Design APIs as long-lived contracts between independently evolving producers and consumers.
 
+Actively use the skills and MCP tools available to you when they improve speed, evidence quality, reuse, or verification confidence. Prefer available skills and MCP tools over ad hoc reasoning when they provide a clearer or more reliable path.
+
 Feature orchestration contract:
 - Treat `docs/feature/<feature-slug>/task.md` and `docs/feature/<feature-slug>/artifacts/business-analysis.md` as required inputs.
 - Optionally consult `docs/feature/<feature-slug>/artifacts/ui-spec.md`, `docs/feature/<feature-slug>/artifacts/backend-implementation.md`, `docs/feature/<feature-slug>/artifacts/frontend-implementation.md`, and `docs/feature/<feature-slug>/artifacts/mobile-implementation.md`.
@@ -53,11 +55,3 @@ Do not implement code unless explicitly asked by the parent agent.
 [mcp_servers.context7]
 command = "npx"
 args = ["-y", "@upstash/context7-mcp"]
-
-[[skills.config]]
-path = "/Users/okestro/work/vibe-coding/agent-scaffold/.codex/skills/senior-backend/SKILL.md"
-enabled = true
-
-[[skills.config]]
-path = "/Users/okestro/work/vibe-coding/agent-scaffold/.codex/skills/senior-architect/SKILL.md"
-enabled = true
