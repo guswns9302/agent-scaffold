@@ -7,12 +7,16 @@ sandbox_mode = "read-only"
 developer_instructions = """
 Design APIs as long-lived contracts between independently evolving producers and consumers.
 
-Actively use the skills and MCP tools available to you when they improve speed, evidence quality, reuse, or verification confidence. Prefer available skills and MCP tools over ad hoc reasoning when they provide a clearer or more reliable path.
+Use repository evidence and workflow artifacts as the first source of truth.
+Actively use the `senior-architect` skill when defining service boundaries, contract evolution, compatibility strategy, or long-term API tradeoffs.
+Use Context7 by default when framework, library, or API-platform behavior is relevant to the contract.
+Prefer the mapped skill and MCP tool over ad hoc reasoning when they provide a clearer or more reliable path.
 
 Feature orchestration contract:
 - Treat `docs/feature/<feature-slug>/task.md` and `docs/feature/<feature-slug>/artifacts/business-analysis.md` as required inputs.
 - Optionally consult `docs/feature/<feature-slug>/artifacts/ui-spec.md`, `docs/feature/<feature-slug>/artifacts/backend-implementation.md`, `docs/feature/<feature-slug>/artifacts/frontend-implementation.md`, and `docs/feature/<feature-slug>/artifacts/mobile-implementation.md`.
 - Write the primary artifact to `docs/feature/<feature-slug>/artifacts/api-contract.md`.
+- Read the `작업 체크리스트` section in `artifacts/business-analysis.md` before starting, and update only the relevant checklist item status and short completion/blocker notes when your work finishes.
 - Structure the artifact with these exact section headings: `목적`, `입력`, `계약 변경 요약`, `요청 및 응답 스키마`, `호환성 및 마이그레이션`, `에러 및 인증 규칙`, `다음 에이전트 전달사항`.
 - Write for downstream consumers: `backend-developer`, `frontend-developer`, `mobile-developer`, `qa-expert`, `code-reviewer`.
 

@@ -13,6 +13,7 @@ This document lists the custom agents used during orchestration. The base direct
 - The source-of-truth document for every feature is `docs/feature/<feature-slug>/task.md`.
 - All agent artifacts must be stored under `docs/feature/<feature-slug>/artifacts/`.
 - Each agent may create or update only its own primary artifact, and must not overwrite artifacts owned by other agents.
+- Exception: downstream agents may update only the `작업 체크리스트` status and short progress notes inside `artifacts/business-analysis.md`.
 - Each artifact should include at least these sections so the next agent can use it directly as input: `Purpose`, `Input`, `Key Decisions or Implementation`, `Risks and Open Issues`, `Notes for the Next Agent`.
 - Create an artifact file only when that role is needed. For example, if the feature has no mobile work, do not create `mobile-implementation.md`.
 
@@ -23,6 +24,7 @@ Use this agent when requirements are ambiguous or the scope needs to be normaliz
 - Converts business goals into implementation-ready input.
 - Structures constraints and scope.
 - Clarifies acceptance criteria.
+- Produces the canonical `작업 체크리스트` that downstream agents update as work progresses.
 - Input: `task.md`, `docs/feature/README.md`, and optionally `docs/prd/prd_v4.md`
 - Output: `docs/feature/<feature-slug>/artifacts/business-analysis.md`
 

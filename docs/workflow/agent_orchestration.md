@@ -13,8 +13,10 @@ This document defines the orchestration rules for feature work where multiple ag
 - The source-of-truth document for a feature is always `docs/feature/<feature-slug>/task.md`.
 - Handoff artifacts must always be stored under `docs/feature/<feature-slug>/artifacts/`.
 - Each agent may create or update only its own primary artifact file.
+- Exception: downstream agents may also update only the `작업 체크리스트` status and short progress notes in `artifacts/business-analysis.md`.
 - Before starting work, each downstream agent must read its required inputs and any selected optional inputs, then record what it read in the artifact's `Input` section.
 - Implementation agents must not stop at changing code. They must also record an implementation summary and verification results for downstream agents.
+- `business-analyst` is analysis-only and must never generate code or modify code directly.
 - Roles that are unnecessary for a specific feature may be skipped, but no agent may proceed in a way that conflicts with already-created upstream artifacts.
 
 ## Recommended Directory Structure
@@ -60,6 +62,8 @@ upstream:
 
 ## Key Decisions or Implementation
 
+## 작업 체크리스트
+
 ## Verification or Evidence
 
 ## Risks and Open Issues
@@ -70,6 +74,9 @@ upstream:
 Rules:
 
 - In `Input`, record both the actual file paths you read and a short summary of what mattered.
+- In `artifacts/business-analysis.md`, `작업 체크리스트` is the canonical shared progress tracker for the feature.
+- `business-analyst` creates the initial checklist from `task.md` and normalized scope.
+- Downstream agents may update only checklist status and short completion/blocker notes there. They must not silently rewrite the analysis content.
 - In `Notes for the Next Agent`, record immediately actionable conditions, cautions, and blockers.
 - Implementation agents must record changed files, verification commands, and environment constraints.
 - Design agents must record unresolved decisions and available options.
@@ -94,6 +101,7 @@ Rules:
 1. `business-analyst` normalizes `task.md` into an implementation-ready scope.
 2. Save the result to `artifacts/business-analysis.md`.
 3. The result must describe fine-grained implementation steps for each feature area.
+4. The result must include a `작업 체크리스트` section that downstream agents can update as work completes.
 
 This document is the starting point for all later agents. If requirements are unstable, every downstream artifact becomes unstable, so lock this first.
 
@@ -140,8 +148,10 @@ Parallel conditions:
 - The orchestrator must always specify `feature-slug` when calling an agent.
 - For each downstream agent, the orchestrator must pass the list of input files that must be read.
 - For each downstream agent, the orchestrator must also pass the single output file that must be created or updated.
+- The orchestrator must also tell downstream agents which checklist items in `artifacts/business-analysis.md` they are expected to update.
 - When an artifact already exists, prefer updating it instead of overwriting it. If a prior decision changes, record the reason inside the document.
 - If downstream work must begin before implementation is complete, keep `status: draft` and explicitly record the incomplete conditions.
+- When updating `artifacts/business-analysis.md`, downstream agents may change only checklist status and short completion/blocker notes.
 - Do not call `qa-expert` before `(Complete)` appears in the top-level header of `code-review.md`.
 - Once `(Complete)` appears in the top-level header of `code-review.md` and QA begins, keep all later feedback inside `5. QA Verification` and do not return to `4. Code Review`.
 - Outputs from `code-reviewer` and `qa-expert` are feedback documents, not terminal documents. If needed, implementation agents update their own artifacts again after reading them.
