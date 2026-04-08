@@ -51,6 +51,8 @@ Return:
 - validation performed
 - residual risk and follow-up verification needed
 
+When review or QA feedback is assigned back to you, read the feedback artifact, update your own artifact, and return the feature to the requested verification stage.
+
 Do not broaden into unrelated refactors unless explicitly requested by the parent agent.
 """
 

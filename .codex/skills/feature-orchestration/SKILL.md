@@ -63,6 +63,7 @@ Do not use ad hoc orchestration outside this contract unless the repository clea
 
 - The orchestrator is the only agent allowed to update `artifacts/status.md`.
 - The orchestrator should not directly edit role-specific artifacts unless acting as an explicit fallback executor.
+- The orchestrator must not directly implement ordinary review or QA fixes; it must re-delegate them to the appropriate role-specific agent.
 
 ---
 
@@ -154,6 +155,14 @@ Do not use ad hoc orchestration outside this contract unless the repository clea
   - preserve intended `owner`
   - record actual executor in `created_by`
 
+- Agent artifact creation delay, missing not-yet-started artifacts, or ordinary agent response delay must not trigger fallback by themselves.
+
+- Fallback is allowed only when:
+  - the appropriate role agent cannot be executed
+  - the assigned agent has explicitly recorded `status: blocked`
+  - a review or QA loop has been escalated as non-converging
+  - the fallback reason is recorded in the artifact and final report
+
 ---
 
 ## Status Aggregation Rules
@@ -173,6 +182,7 @@ Do not use ad hoc orchestration outside this contract unless the repository clea
   - read each artifact’s frontmatter (`status`, `updated_at`, `blocked_by`)
   - derive the overall feature status
   - update `status.md` after each major phase
+  - record reassignment and loop progress in `status.md` notes when rework is active
 
 - Status must use the standardized enum:
   `not_started`, `in_progress`, `blocked`, `completed`, `needs_revision`, `skipped`
@@ -192,6 +202,42 @@ Do not use ad hoc orchestration outside this contract unless the repository clea
 
 - Keep code review feedback inside the code review loop.
 - Do not mix code review feedback with QA feedback.
+
+---
+
+## Review Rework Loop
+
+- If `code-review.md` is not `completed`, the orchestrator must not fix the issue directly.
+
+- The orchestrator must:
+  - identify the owning implementation agent for each finding
+  - re-delegate the work to `backend-developer`, `frontend-developer`, `mobile-developer`, or `ui-designer` when the issue is purely a spec mismatch
+  - set the assigned rework agent to `in_progress`
+  - set `code-review.md` to `needs_revision` until the next review pass
+  - return to `code-reviewer` after the assigned agent completes its work
+
+- Review loop limits:
+  - maximum 10 cycles
+  - if the same unresolved issue repeats 3 consecutive times without material change, stop automatic looping and escalate
+
+---
+
+## QA Rework Loop
+
+- If `qa-plan.md` identifies failures or unresolved release-blocking issues, the orchestrator must not fix the issue directly.
+
+- The orchestrator must:
+  - identify the owning implementation agent for each QA issue
+  - re-delegate the work to `backend-developer`, `frontend-developer`, `mobile-developer`, or `ui-designer` only when the issue is a spec mismatch rather than an implementation defect
+  - set the assigned rework agent to `in_progress`
+  - set `qa-plan.md` to `needs_revision` until the next QA pass
+  - return to `qa-expert` after the assigned agent completes its work
+
+- QA issues should remain inside the QA loop and must not automatically send the flow back to code review.
+
+- QA loop limits:
+  - maximum 10 cycles
+  - if the same unresolved issue repeats 3 consecutive times without material change, stop automatic looping and escalate
 
 ---
 
@@ -227,11 +273,11 @@ Do not use ad hoc orchestration outside this contract unless the repository clea
 
 ## Loop Control
 
-- Limit code review loop to 3 cycles.
-- Limit QA loop to 3 cycles.
+- Limit code review loop to 10 cycles.
+- Limit QA loop to 10 cycles.
 
 - If the same issue repeats:
-  - do not continue automatic cycles
+  - do not continue automatic cycles after 3 consecutive unresolved repetitions
   - escalate to orchestrator decision
 
 - Detect and stop non-converging workflows early.

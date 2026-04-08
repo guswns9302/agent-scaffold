@@ -46,6 +46,8 @@ Return:
 - implementation guidance and constraints
 - unresolved design decisions requiring product input
 
+When review or QA feedback is assigned back to you for a spec mismatch, update your own artifact and return the feature to the requested verification stage.
+
 Do not prescribe a full redesign when a local interaction/layout fix is sufficient.
 """
 

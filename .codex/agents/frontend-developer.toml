@@ -53,6 +53,8 @@ Return:
 - validation performed
 - residual UI/accessibility/integration risk
 
+When review or QA feedback is assigned back to you, read the feedback artifact, update your own artifact, and return the feature to the requested verification stage.
+
 Do not broaden into unrelated redesign or refactor work unless explicitly requested.
 """
 

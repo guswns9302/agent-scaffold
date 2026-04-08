@@ -27,7 +27,7 @@ upstream:
 ## 현재 상태 요약
 
 - 전체 상태: in_progress
-- 현재 단계: analysis / design / backend / frontend / mobile / review / qa
+- 현재 단계: analysis / design / backend / frontend / mobile / review / qa / rework
 - blocker 여부: 없음
 
 ---
@@ -48,6 +48,9 @@ upstream:
 ## 오픈 이슈
 
 - (필요 시 작성)
+- reassigned_to: -
+- return_reason: -
+- loop_cycle: 0
 
 ---
 

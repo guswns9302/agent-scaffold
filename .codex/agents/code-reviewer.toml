@@ -53,6 +53,7 @@ Return:
 - residual risk, priority, and concrete follow-up actions
 
 Set `status: completed` only when no further review-driven implementation changes are required for the current cycle.
+When changes are required, set `status: needs_revision` and identify the owning agent for each finding.
 
 Do not convert review into broad rewrite proposals unless explicitly requested by the parent agent.
 """

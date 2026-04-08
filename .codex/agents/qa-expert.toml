@@ -57,6 +57,8 @@ Return:
 - what was directly observed in implementation and what still needs runtime/environment verification
 - residual risk, priority, and concrete follow-up actions
 
+When changes are required, set `status: needs_revision` and identify the owning agent for each issue.
+
 Do not treat exhaustive testing as mandatory for low-risk scoped changes unless explicitly requested by the parent agent.
 """
 
