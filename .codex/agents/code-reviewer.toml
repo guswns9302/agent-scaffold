@@ -18,7 +18,7 @@ Role contract:
 - Required input: `docs/feature/<feature-slug>/task.md`
 - Optional inputs: `docs/feature/<feature-slug>/artifacts/business-analysis.md`, `docs/feature/<feature-slug>/artifacts/ui-spec.md`, `docs/feature/<feature-slug>/artifacts/backend-implementation.md`, `docs/feature/<feature-slug>/artifacts/frontend-implementation.md`, `docs/feature/<feature-slug>/artifacts/mobile-implementation.md`, `docs/feature/<feature-slug>/artifacts/qa-plan.md`
 - Primary artifact: `docs/feature/<feature-slug>/artifacts/code-review.md`
-- Required frontmatter: `feature`, `artifact`, `owner`, `created_by`, `status`, `updated_at`, `blocked_by`, `upstream`
+- Required frontmatter: `feature`, `artifact`, `owner`, `created_by`, `status`, `updated_at`, `blocked_by`, `blocked_reason_type`, `escalate_to`, `upstream`
 - Required section headings: `실행 계획`, `목적`, `입력`, `검토 범위`, `핵심 발견사항`, `권장 수정 또는 완화책`, `검증 공백`, `다음 에이전트 전달사항`
 
 Working mode:
@@ -53,7 +53,7 @@ Return:
 - residual risk, priority, and concrete follow-up actions
 
 Set `status: completed` only when no further review-driven implementation changes are required for the current cycle.
-When changes are required, set `status: needs_revision` and identify the owning agent for each finding.
+When changes are required, set `status: needs_revision`, identify the owning agent for each finding, and classify blocked issues as `operational` or `decision` when applicable.
 
 Do not convert review into broad rewrite proposals unless explicitly requested by the parent agent.
 """

@@ -165,6 +165,42 @@ Do not use ad hoc orchestration outside this contract unless the repository clea
 
 ---
 
+## Blocked And Escalation Classification
+
+- Re-delegation failure must be classified as either `operational` or `decision`.
+
+- `operational` means execution could continue in principle, but the assigned role agent could not complete work because of an operational problem.
+  Examples:
+  - agent capacity limits
+  - tool or MCP failure
+  - session failure
+  - transient environment failure
+
+- `decision` means execution cannot safely continue without a human product or scope decision.
+  Examples:
+  - requirement ambiguity
+  - spec conflict
+  - unresolved scope boundary
+  - product decision required
+
+- `operational` issues may be re-delegated to the same role agent.
+
+- `decision` issues must not be re-delegated automatically and must escalate immediately.
+
+- When an issue becomes `blocked`, the owning artifact and `status.md` must record:
+  - `blocked_reason_type`
+  - `blocked_by`
+  - `escalate_to`
+  - `escalation_note`
+
+- Escalation routing is fixed:
+  - `operational` → `human-operator`
+  - `decision` → `product-owner`
+
+- After escalation, the orchestrator must pause automatic loop progression for that feature until the blocking condition is explicitly resolved.
+
+---
+
 ## Status Aggregation Rules
 
 - `artifacts/status.md` is the single aggregated progress view for the feature.
@@ -179,7 +215,7 @@ Do not use ad hoc orchestration outside this contract unless the repository clea
 
 - The orchestrator must:
   - use `docs/status-template/status.md` as the template
-  - read each artifact’s frontmatter (`status`, `updated_at`, `blocked_by`)
+  - read each artifact’s frontmatter (`status`, `updated_at`, `blocked_by`, `blocked_reason_type`, `escalate_to`)
   - derive the overall feature status
   - update `status.md` after each major phase
   - record reassignment and loop progress in `status.md` notes when rework is active
@@ -190,6 +226,8 @@ Do not use ad hoc orchestration outside this contract unless the repository clea
 - If an artifact does not exist yet for a valid future phase, record it as `not_started`.
 
 - When `blocked_by` is not applicable, record `-`.
+- When `blocked_reason_type` is not applicable, record `-`.
+- When `escalate_to` is not applicable, record `-`.
 
 - `status.md` must not contain independent state;
   it must always reflect the current state derived from artifacts.
@@ -211,6 +249,8 @@ Do not use ad hoc orchestration outside this contract unless the repository clea
 
 - The orchestrator must:
   - identify the owning implementation agent for each finding
+  - classify each failed finding as `operational` or `decision`
+  - escalate immediately instead of re-delegating when the issue is `decision`
   - re-delegate the work to `backend-developer`, `frontend-developer`, `mobile-developer`, or `ui-designer` when the issue is purely a spec mismatch
   - set the assigned rework agent to `in_progress`
   - set `code-review.md` to `needs_revision` until the next review pass
@@ -228,6 +268,8 @@ Do not use ad hoc orchestration outside this contract unless the repository clea
 
 - The orchestrator must:
   - identify the owning implementation agent for each QA issue
+  - classify each failed issue as `operational` or `decision`
+  - escalate immediately instead of re-delegating when the issue is `decision`
   - re-delegate the work to `backend-developer`, `frontend-developer`, `mobile-developer`, or `ui-designer` only when the issue is a spec mismatch rather than an implementation defect
   - set the assigned rework agent to `in_progress`
   - set `qa-plan.md` to `needs_revision` until the next QA pass
@@ -281,6 +323,7 @@ Do not use ad hoc orchestration outside this contract unless the repository clea
   - escalate to orchestrator decision
 
 - Detect and stop non-converging workflows early.
+- `decision`-classified blocked issues must not be retried automatically.
 
 ---
 

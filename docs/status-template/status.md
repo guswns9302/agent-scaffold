@@ -6,6 +6,8 @@ created_by: orchestrator
 status: in_progress
 updated_at: YYYY-MM-DD
 blocked_by: -
+blocked_reason_type: -
+escalate_to: -
 upstream:
   - ../task.md
   - ./business-analysis.md
@@ -51,6 +53,9 @@ upstream:
 - reassigned_to: -
 - return_reason: -
 - loop_cycle: 0
+- blocked_reason_type: -
+- escalate_to: -
+- escalation_note: -
 
 ---
 
